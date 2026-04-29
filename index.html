@@ -24,10 +24,11 @@
     background: var(--bg);
     color: var(--white);
     font-family: 'Inter', sans-serif;
-    height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
     cursor: none;
   }
+  body { scroll-behavior: smooth; }
+  ::selection { background: var(--green); color: #0A0A0A; }
 
   a, button { cursor: none; color: inherit; text-decoration: none; border: none; background: none; }
 
@@ -341,6 +342,239 @@
     50%      { transform: scaleY(1);   opacity: 1; }
   }
 
+  /* ============= ABOUT SECTION ============= */
+  .about {
+    position: relative;
+    padding: 160px 8vw 140px;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .about::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--green));
+    opacity: 0.5;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 80px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .about-left {
+    position: relative;
+  }
+  .big-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(8rem, 18vw, 16rem);
+    line-height: 1;
+    color: rgba(255,255,255,0.04);
+    letter-spacing: -0.02em;
+    position: absolute;
+    top: -30px;
+    left: -10px;
+    pointer-events: none;
+    user-select: none;
+  }
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 30px; height: 1px;
+    background: var(--green);
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 0.95;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    position: relative;
+    z-index: 1;
+  }
+  .section-title .accent { color: var(--green); font-style: italic; }
+
+  .green-line {
+    height: 2px;
+    background: var(--green);
+    margin-top: 28px;
+    width: 0;
+    transition: width 1.4s var(--ease);
+  }
+  .reveal-section.visible .green-line { width: 80px; }
+
+  .bio {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #cccccc;
+    max-width: 640px;
+  }
+  .bio strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  /* Stats */
+  .stats {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 36px 0;
+  }
+  .stat {
+    text-align: left;
+  }
+  .stat .num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .stat .num .plus { color: var(--green); }
+  .stat .lbl {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: #888;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* Highlight box */
+  .highlight {
+    margin-top: 56px;
+    padding: 28px 32px;
+    background: rgba(0,255,100,0.04);
+    border-left: 3px solid var(--green);
+    border-radius: 4px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #e8e8e8;
+  }
+  .highlight::before {
+    content: '"';
+    color: var(--green);
+    font-size: 2.2rem;
+    line-height: 0;
+    position: relative;
+    top: 12px;
+    margin-right: 6px;
+  }
+
+  /* Skills */
+  .skills {
+    margin-top: 80px;
+  }
+  .skills-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--white);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    letter-spacing: 0.02em;
+  }
+  .skills-title .accent { color: var(--green); font-style: italic; }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  .skill-cat h4 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tag {
+    display: inline-block;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: #d8d8d8;
+    transition: border-color 0.4s var(--ease), background 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease);
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .reveal-section.visible .tag {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .tag:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(0,255,100,0.06);
+    transform: translateY(-2px);
+  }
+
+  /* Generic scroll reveal */
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  }
+  .reveal-section.visible .reveal-up {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-section .reveal-up.d1 { transition-delay: 0.1s; }
+  .reveal-section .reveal-up.d2 { transition-delay: 0.25s; }
+  .reveal-section .reveal-up.d3 { transition-delay: 0.4s; }
+  .reveal-section .reveal-up.d4 { transition-delay: 0.55s; }
+  .reveal-section .reveal-up.d5 { transition-delay: 0.7s; }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .skills-grid { grid-template-columns: 1fr; gap: 40px; }
+    .big-num { position: static; font-size: 7rem; opacity: 0.6; }
+  }
+
   @media (max-width: 768px) {
     body { cursor: auto; }
     .cursor-dot, .cursor-circle { display: none; }
@@ -348,6 +582,7 @@
     .card { width: 130px; height: 195px; }
     .cards-stage { height: 50vh; bottom: -4vh; }
     .center-glow { width: 360px; height: 360px; }
+    .about { padding: 100px 6vw 80px; }
   }
 </style>
 </head>
@@ -389,6 +624,79 @@
   </div>
 
   <div class="scroll-hint">Scroll</div>
+</section>
+
+<section class="about reveal-section" id="about">
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="big-num reveal-up">01</div>
+      <div class="section-label reveal-up d1">About Me</div>
+      <h2 class="section-title reveal-up d2">About<br><span class="accent">Me.</span></h2>
+      <div class="green-line"></div>
+    </div>
+
+    <div class="about-right">
+      <p class="bio reveal-up d1">
+        I'm <strong>Mahmoud Maher</strong>, a Senior Graphic Designer with <strong>8+ years of experience</strong>
+        including strong exposure to the <strong>GCC market</strong>. I design smart, impactful visuals
+        that combine strategy, style, and speed — and I build complete <strong>AI-powered workflows</strong>
+        that streamline the entire creative process from concept to delivery.
+      </p>
+
+      <div class="stats reveal-up d2">
+        <div class="stat">
+          <div class="num"><span class="count" data-target="8">0</span><span class="plus">+</span></div>
+          <div class="lbl">Years Experience</div>
+        </div>
+        <div class="stat">
+          <div class="num"><span class="count" data-target="100">0</span><span class="plus">+</span></div>
+          <div class="lbl">Happy Clients</div>
+        </div>
+        <div class="stat">
+          <div class="num"><span class="count" data-target="5000">0</span><span class="plus">+</span></div>
+          <div class="lbl">Projects Delivered</div>
+        </div>
+        <div class="stat">
+          <div class="num"><span class="count" data-target="10">0</span><span class="plus">+</span></div>
+          <div class="lbl">Countries</div>
+        </div>
+      </div>
+
+      <div class="highlight reveal-up d3">
+        I don't just design — I build end-to-end AI-powered creative workflows
+        that combine tools like Midjourney, Runway, and KlingAI to deliver
+        faster, smarter, and more impactful results.
+      </div>
+
+      <div class="skills">
+        <h3 class="skills-title reveal-up d1">What I <span class="accent">Bring.</span></h3>
+        <div class="skills-grid">
+          <div class="skill-cat">
+            <h4 class="reveal-up d2">Design Expertise</h4>
+            <div class="tags">
+              <span class="tag" style="transition-delay:.30s" data-hover>Film Poster Design</span>
+              <span class="tag" style="transition-delay:.36s" data-hover>Key Visual Design</span>
+              <span class="tag" style="transition-delay:.42s" data-hover>Social Media Campaigns</span>
+              <span class="tag" style="transition-delay:.48s" data-hover>Infographic Design</span>
+              <span class="tag" style="transition-delay:.54s" data-hover>Photo Manipulation</span>
+              <span class="tag" style="transition-delay:.60s" data-hover>Brand Identity</span>
+            </div>
+          </div>
+          <div class="skill-cat">
+            <h4 class="reveal-up d2">AI-Powered Workflow</h4>
+            <div class="tags">
+              <span class="tag" style="transition-delay:.30s" data-hover>Midjourney</span>
+              <span class="tag" style="transition-delay:.36s" data-hover>Runway</span>
+              <span class="tag" style="transition-delay:.42s" data-hover>KlingAI</span>
+              <span class="tag" style="transition-delay:.48s" data-hover>Google Labs</span>
+              <span class="tag" style="transition-delay:.54s" data-hover>ChatGPT</span>
+              <span class="tag" style="transition-delay:.60s" data-hover>Adobe Firefly</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <script>
@@ -508,6 +816,45 @@
     requestAnimationFrame(animateCards);
   }
   requestAnimationFrame(animateCards);
+
+  /* Scroll reveal sections */
+  const sections = document.querySelectorAll('.reveal-section');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // trigger count-up on stats inside
+        e.target.querySelectorAll('.count').forEach(startCount);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.18 });
+  sections.forEach(s => io.observe(s));
+
+  function startCount(el) {
+    if (el.dataset.done) return;
+    el.dataset.done = '1';
+    const target = parseInt(el.dataset.target, 10);
+    const duration = 1800;
+    const start = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const v = Math.floor(ease(p) * target);
+      el.textContent = target >= 1000
+        ? v.toLocaleString()
+        : (v < 10 ? '0' + v : v);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target >= 1000 ? target.toLocaleString() : (target < 10 ? '0' + target : target);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* Re-bind cursor hover for newly added elements */
+  document.querySelectorAll('.tag, .about a').forEach(el => {
+    el.addEventListener('mouseenter', () => circle.classList.add('hover'));
+    el.addEventListener('mouseleave', () => circle.classList.remove('hover'));
+  });
 </script>
 
 </body>
