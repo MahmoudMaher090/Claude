@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahmoud Maher — Visual Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: #0A0A0A;
+    color: #EAEAEA;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    height: 100%;
+    cursor: none;
+  }
+
+  a, button { cursor: none; }
+
+  /* Custom cursor */
+  .cursor-dot,
+  .cursor-circle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+  }
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: #C9A84C;
+  }
+  .cursor-circle {
+    width: 38px;
+    height: 38px;
+    border: 1.5px solid #C9A84C;
+    transition: width 0.25s ease, height 0.25s ease, background 0.25s ease;
+  }
+  .cursor-circle.hover {
+    width: 60px;
+    height: 60px;
+    background: rgba(201, 168, 76, 0.15);
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.5em;
+    color: #C9A84C;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0.85;
+  }
+
+  .eyebrow::before,
+  .eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: #C9A84C;
+    vertical-align: middle;
+    margin: 0 16px;
+    opacity: 0.6;
+  }
+
+  /* Glitch */
+  .name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 11vw, 9rem);
+    letter-spacing: 0.04em;
+    color: #EAEAEA;
+    line-height: 0.95;
+    position: relative;
+    display: inline-block;
+  }
+
+  .glitch {
+    position: relative;
+    color: #EAEAEA;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .glitch::before {
+    color: #C9A84C;
+    animation: glitch-top 2.8s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    text-shadow: -2px 0 #C9A84C;
+  }
+  .glitch::after {
+    color: #ff3a3a;
+    animation: glitch-bottom 3.2s infinite linear alternate-reverse;
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    text-shadow: 2px 0 #C9A84C;
+    opacity: 0.7;
+  }
+  @keyframes glitch-top {
+    0%, 92%, 100% { transform: translate(0, 0); }
+    93% { transform: translate(-3px, -2px); }
+    95% { transform: translate(2px, 1px); }
+    97% { transform: translate(-1px, 2px); }
+  }
+  @keyframes glitch-bottom {
+    0%, 90%, 100% { transform: translate(0, 0); }
+    92% { transform: translate(2px, 1px); }
+    94% { transform: translate(-2px, -1px); }
+    96% { transform: translate(1px, -2px); }
+  }
+
+  /* Cycling tagline */
+  .tagline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 3rem);
+    letter-spacing: 0.08em;
+    margin-top: 18px;
+    color: #B7B7B7;
+    height: 1.2em;
+    overflow: hidden;
+  }
+
+  .tagline .prefix {
+    color: #B7B7B7;
+    margin-right: 0.4em;
+  }
+
+  .cycle {
+    display: inline-block;
+    position: relative;
+    height: 1.2em;
+    overflow: hidden;
+    vertical-align: top;
+  }
+
+  .cycle ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    animation: cycle 8s steps(4) infinite;
+  }
+  .cycle li {
+    color: #C9A84C;
+    height: 1.2em;
+    line-height: 1.2em;
+    text-align: left;
+  }
+
+  @keyframes cycle {
+    0%, 22%   { transform: translateY(0); }
+    25%, 47%  { transform: translateY(-1.2em); }
+    50%, 72%  { transform: translateY(-2.4em); }
+    75%, 97%  { transform: translateY(-3.6em); }
+    100%      { transform: translateY(-4.8em); }
+  }
+
+  /* CTA */
+  .cta {
+    display: inline-block;
+    margin-top: 56px;
+    padding: 18px 44px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.35em;
+    color: #C9A84C;
+    background: transparent;
+    border: 1.5px solid #C9A84C;
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #C9A84C;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s cubic-bezier(0.7, 0, 0.3, 1);
+    z-index: -1;
+  }
+  .cta:hover { color: #0A0A0A; }
+  .cta:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: #C9A84C;
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 36px;
+    background: #C9A84C;
+    margin: 12px auto 0;
+    animation: scrollLine 2s ease-in-out infinite;
+    transform-origin: top;
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(0.3); opacity: 0.3; }
+    50%      { transform: scaleY(1);   opacity: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .eyebrow::before, .eyebrow::after { width: 20px; margin: 0 8px; }
+    .cta { padding: 14px 30px; }
+    body { cursor: auto; }
+    .cursor-dot, .cursor-circle { display: none; }
+    a, button { cursor: pointer; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-dot"></div>
+<div class="cursor-circle"></div>
+
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="vignette"></div>
+
+  <div class="hero-content">
+    <div class="eyebrow">Visual Designer &nbsp;&middot;&nbsp; Cairo</div>
+    <h1 class="name">
+      <span class="glitch" data-text="MAHMOUD MAHER">MAHMOUD MAHER</span>
+    </h1>
+    <div class="tagline">
+      <span class="prefix">I Craft</span>
+      <span class="cycle">
+        <ul>
+          <li>Key Visuals.</li>
+          <li>Social Media.</li>
+          <li>Film Posters.</li>
+          <li>AI-Powered.</li>
+          <li>Key Visuals.</li>
+        </ul>
+      </span>
+    </div>
+    <a href="#work" class="cta" data-hover>View My Work</a>
+  </div>
+
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<script>
+  // Custom cursor
+  const dot = document.querySelector('.cursor-dot');
+  const circle = document.querySelector('.cursor-circle');
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let circleX = mouseX, circleY = mouseY;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+  });
+
+  function animateCircle() {
+    circleX += (mouseX - circleX) * 0.15;
+    circleY += (mouseY - circleY) * 0.15;
+    circle.style.transform = `translate(${circleX}px, ${circleY}px) translate(-50%, -50%)`;
+    requestAnimationFrame(animateCircle);
+  }
+  animateCircle();
+
+  document.querySelectorAll('a, button, [data-hover]').forEach(el => {
+    el.addEventListener('mouseenter', () => circle.classList.add('hover'));
+    el.addEventListener('mouseleave', () => circle.classList.remove('hover'));
+  });
+
+  // Particle system
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  const particles = [];
+  const PARTICLE_COUNT = 110;
+  const mouse = { x: -9999, y: -9999, radius: 140 };
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+  window.addEventListener('mouseleave', () => {
+    mouse.x = -9999; mouse.y = -9999;
+  });
+
+  class Particle {
+    constructor() {
+      this.reset(true);
+    }
+    reset(initial = false) {
+      this.x = Math.random() * W;
+      this.y = initial ? Math.random() * H : Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.size = Math.random() * 1.8 + 0.4;
+      this.baseAlpha = Math.random() * 0.6 + 0.2;
+      this.alpha = this.baseAlpha;
+    }
+    update() {
+      // Mouse repulsion / attraction
+      const dx = this.x - mouse.x;
+      const dy = this.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < mouse.radius) {
+        const force = (mouse.radius - dist) / mouse.radius;
+        this.x += (dx / dist) * force * 2.5;
+        this.y += (dy / dist) * force * 2.5;
+        this.alpha = Math.min(1, this.baseAlpha + force * 0.6);
+      } else {
+        this.alpha += (this.baseAlpha - this.alpha) * 0.05;
+      }
+
+      this.x += this.vx;
+      this.y += this.vy;
+
+      if (this.x < -10) this.x = W + 10;
+      if (this.x > W + 10) this.x = -10;
+      if (this.y < -10) this.y = H + 10;
+      if (this.y > H + 10) this.y = -10;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201, 168, 76, ${this.alpha})`;
+      ctx.shadowColor = 'rgba(201, 168, 76, 0.8)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 110) {
+          const op = (1 - d / 110) * 0.18;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(201, 168, 76, ${op})`;
+          ctx.lineWidth = 0.5;
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.shadowBlur = 0;
+    drawConnections();
+    for (const p of particles) {
+      p.update();
+      p.draw();
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
+</script>
+
+</body>
+</html>
