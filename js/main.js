@@ -68,62 +68,135 @@
     a.addEventListener('click', () => nav.classList.remove('open'))
   );
 
-  /* Portfolio grid */
-  const WORKS = [
-    { cat: 'key',    catLabel: 'Key Visuals',   name: 'Project 01', grad: 'linear-gradient(135deg, #1a1a2e, #16213e)', ratio: '2/3' },
-    { cat: 'social', catLabel: 'Social Media',  name: 'Project 02', grad: 'linear-gradient(135deg, #0f3460, #533483)', ratio: '2/3' },
-    { cat: 'film',   catLabel: 'Film Posters',  name: 'Project 03', grad: 'linear-gradient(135deg, #1a1a1a, #2d2d2d)', ratio: '2/3' },
-    { cat: 'info',   catLabel: 'Infographics',  name: 'Project 04', grad: 'linear-gradient(135deg, #0d1b2a, #1b2838)', ratio: '2/3' },
-    { cat: 'key',    catLabel: 'Key Visuals',   name: 'Project 05', grad: 'linear-gradient(135deg, #1a0a0a, #2d1515)', ratio: '2/3' },
-    { cat: 'social', catLabel: 'Social Media',  name: 'Project 06', grad: 'linear-gradient(135deg, #0a1a0a, #152d15)', ratio: '2/3' },
-    { cat: 'film',   catLabel: 'Film Posters',  name: 'Project 07', grad: 'linear-gradient(135deg, #1a1500, #2d2500)', ratio: '2/3' },
-    { cat: 'social', catLabel: 'Social Media',  name: 'Project 08', grad: 'linear-gradient(135deg, #0a0a1a, #15152d)', ratio: '2/3' },
-    { cat: 'info',   catLabel: 'Infographics',  name: 'Project 09', grad: 'linear-gradient(135deg, #1a0a1a, #2d152d)', ratio: '2/3' },
+  /* Netflix Carousel */
+  const CATEGORIES = [
+    { key: 'key',    label: 'Key Visuals'  },
+    { key: 'social', label: 'Social Media' },
+    { key: 'film',   label: 'Film Posters' },
+    { key: 'info',   label: 'Infographics' },
   ];
 
-  const grid = document.getElementById('grid');
-  WORKS.forEach((w, i) => {
-    const a = document.createElement('a');
-    a.href = '#';
-    a.className = 'work';
-    a.dataset.cat = w.cat;
-    a.style.setProperty('--i', i);
-    a.style.setProperty('--ratio', w.ratio);
-    a.style.setProperty('--grad', w.grad);
-    a.setAttribute('data-hover', '');
-    a.innerHTML = `
-      <div class="thumb"></div>
-      <div class="label">
-        <div class="cat">${w.catLabel}</div>
-        <div class="name">${w.name}</div>
-        <div class="view">View Project</div>
+  const WORKS = [
+    { cat: 'key',    catLabel: 'Key Visuals',  name: 'Solar Campaign',  grad: 'linear-gradient(135deg,#1a1a2e,#16213e)' },
+    { cat: 'key',    catLabel: 'Key Visuals',  name: 'Urban Pulse',     grad: 'linear-gradient(135deg,#1a0a0a,#2d1515)' },
+    { cat: 'key',    catLabel: 'Key Visuals',  name: 'Crimson Peak',    grad: 'linear-gradient(135deg,#2e1a1a,#3d1616)' },
+    { cat: 'key',    catLabel: 'Key Visuals',  name: 'Azure Drift',     grad: 'linear-gradient(135deg,#0a1a2e,#112233)' },
+    { cat: 'key',    catLabel: 'Key Visuals',  name: 'Emerald City',    grad: 'linear-gradient(135deg,#0a1f0a,#153015)' },
+    { cat: 'key',    catLabel: 'Key Visuals',  name: 'Gold Rush',       grad: 'linear-gradient(135deg,#2e2a0a,#3d3510)' },
+    { cat: 'social', catLabel: 'Social Media', name: 'Velvet Pulse',    grad: 'linear-gradient(135deg,#0f3460,#533483)' },
+    { cat: 'social', catLabel: 'Social Media', name: 'Neon Markets',    grad: 'linear-gradient(135deg,#0a1a0a,#152d15)' },
+    { cat: 'social', catLabel: 'Social Media', name: 'Blue Wave',       grad: 'linear-gradient(135deg,#0a0a1a,#15152d)' },
+    { cat: 'social', catLabel: 'Social Media', name: 'Pink Neon',       grad: 'linear-gradient(135deg,#2a0a1a,#3d1525)' },
+    { cat: 'social', catLabel: 'Social Media', name: 'Cyber Glow',      grad: 'linear-gradient(135deg,#0a1a2a,#102030)' },
+    { cat: 'social', catLabel: 'Social Media', name: 'Sunset Vibes',    grad: 'linear-gradient(135deg,#2a1a0a,#3d2510)' },
+    { cat: 'film',   catLabel: 'Film Posters', name: 'Crimson Hour',    grad: 'linear-gradient(135deg,#1a1a1a,#2d2d2d)' },
+    { cat: 'film',   catLabel: 'Film Posters', name: 'Black Tide',      grad: 'linear-gradient(135deg,#1a1500,#2d2500)' },
+    { cat: 'film',   catLabel: 'Film Posters', name: 'Dark Matter',     grad: 'linear-gradient(135deg,#0a0a0a,#1a1a1a)' },
+    { cat: 'film',   catLabel: 'Film Posters', name: 'Quiet Storm',     grad: 'linear-gradient(135deg,#1a0a2e,#250a3d)' },
+    { cat: 'film',   catLabel: 'Film Posters', name: 'Blood Moon',      grad: 'linear-gradient(135deg,#2e0a0a,#3d1010)' },
+    { cat: 'film',   catLabel: 'Film Posters', name: 'Silver Screen',   grad: 'linear-gradient(135deg,#1a1a2e,#25253d)' },
+    { cat: 'info',   catLabel: 'Infographics', name: 'Data Bloom',      grad: 'linear-gradient(135deg,#0d1b2a,#1b2838)' },
+    { cat: 'info',   catLabel: 'Infographics', name: 'Flow States',     grad: 'linear-gradient(135deg,#1a0a1a,#2d152d)' },
+    { cat: 'info',   catLabel: 'Infographics', name: 'Market Pulse',    grad: 'linear-gradient(135deg,#0a2a1a,#103020)' },
+    { cat: 'info',   catLabel: 'Infographics', name: 'Tech Trends',     grad: 'linear-gradient(135deg,#0a0a2a,#101030)' },
+    { cat: 'info',   catLabel: 'Infographics', name: 'Growth Chart',    grad: 'linear-gradient(135deg,#1a2a0a,#203010)' },
+    { cat: 'info',   catLabel: 'Infographics', name: 'Stats Visual',    grad: 'linear-gradient(135deg,#2a1a0a,#301a08)' },
+  ];
+
+  const nfSection = document.getElementById('netflixSection');
+  const rowEls = {};
+
+  CATEGORIES.forEach(({ key, label }) => {
+    const row = document.createElement('div');
+    row.className = 'nf-row';
+    row.id = 'nf-' + key;
+
+    const header = document.createElement('div');
+    header.className = 'nf-row-header';
+    header.innerHTML = `
+      <span class="nf-row-title">${label}</span>
+      <div class="nf-arrows">
+        <button class="nf-arrow nf-arrow--prev" aria-label="Scroll left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <button class="nf-arrow nf-arrow--next" aria-label="Scroll right">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
       </div>
     `;
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      openLightbox(w);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'nf-track-wrap';
+
+    const track = document.createElement('div');
+    track.className = 'nf-track';
+
+    WORKS.filter(w => w.cat === key).forEach(w => {
+      const card = document.createElement('a');
+      card.href = '#';
+      card.className = 'nf-card';
+      card.style.setProperty('--grad', w.grad);
+      card.setAttribute('data-hover', '');
+      card.innerHTML = `
+        <div class="nf-thumb" style="background:${w.grad}"></div>
+        <div class="nf-overlay">
+          <div class="nf-cat">${w.catLabel}</div>
+          <div class="nf-name">${w.name}</div>
+          <div class="nf-view">View Project</div>
+        </div>
+      `;
+      card.addEventListener('click', e => { e.preventDefault(); openLightbox(w); });
+      track.appendChild(card);
     });
-    grid.appendChild(a);
+
+    /* Drag to scroll */
+    let isDragging = false, dragStartX = 0, scrollStart = 0;
+    track.addEventListener('mousedown', e => {
+      isDragging = true; dragStartX = e.clientX; scrollStart = track.scrollLeft;
+      track.style.scrollBehavior = 'auto';
+    });
+    addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      track.scrollLeft = scrollStart - (e.clientX - dragStartX);
+    });
+    addEventListener('mouseup', () => {
+      isDragging = false;
+      track.style.scrollBehavior = 'smooth';
+    });
+
+    /* Arrow buttons */
+    const scrollAmt = 640;
+    header.querySelector('.nf-arrow--prev').addEventListener('click', () => {
+      track.scrollLeft -= scrollAmt;
+    });
+    header.querySelector('.nf-arrow--next').addEventListener('click', () => {
+      track.scrollLeft += scrollAmt;
+    });
+
+    wrap.appendChild(track);
+    row.appendChild(header);
+    row.appendChild(wrap);
+    nfSection.appendChild(row);
+    rowEls[key] = row;
   });
 
-  /* Filters */
+  /* Filters — highlight + scroll to row */
   const filterBtns = document.querySelectorAll('.filter-btn');
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const f = btn.dataset.filter;
-      const works = document.querySelectorAll('.work');
-      works.forEach(w => w.classList.add('filter-out'));
-      setTimeout(() => {
-        works.forEach(w => {
-          const show = f === 'all' || w.dataset.cat === f;
-          w.classList.toggle('hidden', !show);
-        });
-        requestAnimationFrame(() => {
-          works.forEach(w => w.classList.remove('filter-out'));
-        });
-      }, 280);
+      Object.values(rowEls).forEach(r => r.classList.remove('highlighted'));
+      if (f === 'all') return;
+      const target = rowEls[f];
+      if (!target) return;
+      target.classList.add('highlighted');
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
@@ -136,7 +209,7 @@
 
   function openLightbox(w) {
     lbThumb.style.background = w.grad;
-    lbThumb.style.aspectRatio = w.ratio;
+    lbThumb.style.aspectRatio = '2/3';
     lbCat.textContent = w.catLabel;
     lbName.textContent = w.name;
     lightbox.classList.add('open');
@@ -155,7 +228,7 @@
   });
 
   /* Re-bind cursor hover for all interactive elements */
-  document.querySelectorAll('.tag, .about a, .work, .filter-btn, .nav a, .hamburger, .lightbox-close').forEach(el => {
+  document.querySelectorAll('.tag, .about a, .nf-card, .nf-arrow, .filter-btn, .nav a, .hamburger, .lightbox-close').forEach(el => {
     el.addEventListener('mouseenter', () => circle.classList.add('hover'));
     el.addEventListener('mouseleave', () => circle.classList.remove('hover'));
   });
