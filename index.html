@@ -1002,6 +1002,98 @@
     color: #888888;
   }
 
+  /* ============= CLIENTS MARQUEE ============= */
+  .clients {
+    position: relative;
+    padding: 120px 0;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .clients::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--green));
+    opacity: 0.5;
+  }
+
+  .clients-head {
+    text-align: center;
+    padding: 0 8vw;
+    margin-bottom: 64px;
+  }
+  .clients-head .section-label {
+    justify-content: center;
+    display: inline-flex;
+    margin-bottom: 14px;
+  }
+  .clients-head .section-label::before { display: none; }
+
+  .marquee-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .marquee-row {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 0;
+  }
+  .marquee-row--left  .marquee-track { animation: scrollLeft  18s linear infinite; }
+  .marquee-row--right .marquee-track { animation: scrollRight 18s linear infinite; }
+  .marquee-row--left:hover  .marquee-track,
+  .marquee-row--right:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @keyframes scrollRight {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    padding: 0 14px;
+    white-space: nowrap;
+  }
+  .marquee-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    transition: color 0.3s var(--ease), text-shadow 0.3s var(--ease);
+  }
+  .marquee-name:hover {
+    color: #ffffff;
+    text-shadow: 0 0 24px rgba(0,255,100,0.5);
+  }
+  .marquee-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
   /* ============= RESPONSIVE ============= */
   @media (max-width: 1100px) {
     .grid { column-count: 2; }
@@ -1317,6 +1409,27 @@
   </div>
 </section>
 
+<section class="clients reveal-section" id="clients">
+  <div class="clients-head">
+    <div class="section-label reveal-up d1">Trusted By</div>
+    <h2 class="section-title reveal-up d2">Brands I've <span class="accent">Worked With.</span></h2>
+  </div>
+
+  <div class="marquee-wrap">
+
+    <!-- Row 1: scrolls left -->
+    <div class="marquee-row marquee-row--left">
+      <div class="marquee-track" id="marqueeTrack1"></div>
+    </div>
+
+    <!-- Row 2: scrolls right -->
+    <div class="marquee-row marquee-row--right">
+      <div class="marquee-track" id="marqueeTrack2"></div>
+    </div>
+
+  </div>
+</section>
+
 <div class="lightbox" id="lightbox" aria-hidden="true">
   <div class="lightbox-inner" id="lightboxInner">
     <button class="lightbox-close" id="lightboxClose" data-hover>&times;</button>
@@ -1445,6 +1558,28 @@
     requestAnimationFrame(animateCards);
   }
   requestAnimationFrame(animateCards);
+
+  /* Marquee builder */
+  const ROW1 = ['GAC Motor','Royal Commission Makkah','Al Matar','Chevrolet','Flamingo Pets','ABAZA Auto','Neauvia','ServMoi','Souvlaki','Bronx'];
+  const ROW2 = ['King Merryland','Loogle','Elevado Tower','alBaraka Foods','Alfred & Mina','Sports For All','Türk Fabrikası','Wothoq Technologies','فقيه Medical','Bahy Center'];
+
+  function buildMarquee(trackEl, names) {
+    function makeSet() {
+      const frag = document.createDocumentFragment();
+      names.forEach(name => {
+        const item = document.createElement('span');
+        item.className = 'marquee-item';
+        item.innerHTML = `<span class="marquee-name">${name}</span><span class="marquee-dot"></span>`;
+        frag.appendChild(item);
+      });
+      return frag;
+    }
+    trackEl.appendChild(makeSet());
+    trackEl.appendChild(makeSet());
+  }
+
+  buildMarquee(document.getElementById('marqueeTrack1'), ROW1);
+  buildMarquee(document.getElementById('marqueeTrack2'), ROW2);
 
   /* Scroll reveal sections */
   const sections = document.querySelectorAll('.reveal-section');
