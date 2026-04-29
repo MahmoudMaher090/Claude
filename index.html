@@ -6,27 +6,48 @@
 <title>Mahmoud Maher — Visual Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  :root {
+    --bg: #0A0A0A;
+    --gold: #C9A84C;
+    --gold-soft: rgba(201, 168, 76, 0.6);
+    --text: #EAEAEA;
+    --muted: #8a8a8a;
+    --ease: cubic-bezier(0.7, 0, 0.3, 1);
+  }
+
   html, body {
-    background: #0A0A0A;
-    color: #EAEAEA;
+    background: var(--bg);
+    color: var(--text);
     font-family: 'Inter', sans-serif;
-    overflow: hidden;
     height: 100%;
+    overflow: hidden;
     cursor: none;
   }
 
-  a, button { cursor: none; }
+  a, button { cursor: none; color: inherit; text-decoration: none; }
+
+  /* Page fade-in */
+  .page-fade {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 10000;
+    pointer-events: none;
+    animation: pageFade 1.4s var(--ease) forwards;
+  }
+  @keyframes pageFade {
+    0%   { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
 
   /* Custom cursor */
-  .cursor-dot,
-  .cursor-circle {
+  .cursor-dot, .cursor-circle {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     pointer-events: none;
     z-index: 9999;
     border-radius: 50%;
@@ -34,20 +55,17 @@
     mix-blend-mode: difference;
   }
   .cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: #C9A84C;
+    width: 5px; height: 5px;
+    background: var(--gold);
   }
   .cursor-circle {
-    width: 38px;
-    height: 38px;
-    border: 1.5px solid #C9A84C;
-    transition: width 0.25s ease, height 0.25s ease, background 0.25s ease;
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold);
+    transition: width 0.35s var(--ease), height 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease);
   }
   .cursor-circle.hover {
-    width: 60px;
-    height: 60px;
-    background: rgba(201, 168, 76, 0.15);
+    width: 64px; height: 64px;
+    background: rgba(201, 168, 76, 0.1);
   }
 
   /* Hero */
@@ -64,15 +82,13 @@
   #particles {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
     z-index: 1;
   }
 
   .vignette {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.9) 100%);
     z-index: 2;
     pointer-events: none;
   }
@@ -81,202 +97,184 @@
     position: relative;
     z-index: 3;
     text-align: center;
-    padding: 0 24px;
+    padding: 0 32px;
+    max-width: 1100px;
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: reveal 1.2s var(--ease) forwards;
+  }
+  .reveal.d1 { animation-delay: 0.6s; }
+  .reveal.d2 { animation-delay: 1.0s; }
+  .reveal.d3 { animation-delay: 1.4s; }
+  .reveal.d4 { animation-delay: 1.8s; }
+  .reveal.d5 { animation-delay: 2.2s; }
+
+  @keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .eyebrow {
     font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 0.75rem;
-    letter-spacing: 0.5em;
-    color: #C9A84C;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.6em;
+    color: var(--gold);
     text-transform: uppercase;
-    margin-bottom: 28px;
-    opacity: 0.85;
+    margin-bottom: 36px;
+    opacity: 0.9;
   }
 
-  .eyebrow::before,
-  .eyebrow::after {
-    content: '';
-    display: inline-block;
-    width: 40px;
+  /* Decorative line */
+  .line {
+    width: 80px;
     height: 1px;
-    background: #C9A84C;
-    vertical-align: middle;
-    margin: 0 16px;
-    opacity: 0.6;
-  }
-
-  /* Glitch */
-  .name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.5rem, 11vw, 9rem);
-    letter-spacing: 0.04em;
-    color: #EAEAEA;
-    line-height: 0.95;
-    position: relative;
-    display: inline-block;
-  }
-
-  .glitch {
-    position: relative;
-    color: #EAEAEA;
-  }
-  .glitch::before,
-  .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-  .glitch::before {
-    color: #C9A84C;
-    animation: glitch-top 2.8s infinite linear alternate-reverse;
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-    text-shadow: -2px 0 #C9A84C;
-  }
-  .glitch::after {
-    color: #ff3a3a;
-    animation: glitch-bottom 3.2s infinite linear alternate-reverse;
-    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
-    text-shadow: 2px 0 #C9A84C;
+    background: var(--gold);
+    margin: 0 auto;
     opacity: 0.7;
+    transform-origin: center;
+    animation: lineGrow 1.6s var(--ease) 0.4s forwards;
+    transform: scaleX(0);
   }
-  @keyframes glitch-top {
-    0%, 92%, 100% { transform: translate(0, 0); }
-    93% { transform: translate(-3px, -2px); }
-    95% { transform: translate(2px, 1px); }
-    97% { transform: translate(-1px, 2px); }
-  }
-  @keyframes glitch-bottom {
-    0%, 90%, 100% { transform: translate(0, 0); }
-    92% { transform: translate(2px, 1px); }
-    94% { transform: translate(-2px, -1px); }
-    96% { transform: translate(1px, -2px); }
+  @keyframes lineGrow {
+    to { transform: scaleX(1); }
   }
 
-  /* Cycling tagline */
+  .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    line-height: 1.05;
+    margin: 38px 0 28px;
+    text-shadow: 0 0 40px rgba(201, 168, 76, 0.15);
+  }
+
+  .name .space { display: inline-block; width: 0.4em; }
+
+  /* Tagline */
   .tagline {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.6rem, 4vw, 3rem);
-    letter-spacing: 0.08em;
-    margin-top: 18px;
-    color: #B7B7B7;
-    height: 1.2em;
-    overflow: hidden;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.15rem, 2vw, 1.6rem);
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    margin-top: 8px;
+    height: 1.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
   }
 
   .tagline .prefix {
-    color: #B7B7B7;
-    margin-right: 0.4em;
+    color: var(--muted);
   }
 
-  .cycle {
-    display: inline-block;
+  .crossfade {
     position: relative;
-    height: 1.2em;
-    overflow: hidden;
-    vertical-align: top;
-  }
-
-  .cycle ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    animation: cycle 8s steps(4) infinite;
-  }
-  .cycle li {
-    color: #C9A84C;
-    height: 1.2em;
-    line-height: 1.2em;
+    display: inline-block;
+    height: 1.6em;
+    min-width: 9em;
     text-align: left;
   }
+  .crossfade span {
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    white-space: nowrap;
+  }
+  .crossfade span.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-  @keyframes cycle {
-    0%, 22%   { transform: translateY(0); }
-    25%, 47%  { transform: translateY(-1.2em); }
-    50%, 72%  { transform: translateY(-2.4em); }
-    75%, 97%  { transform: translateY(-3.6em); }
-    100%      { transform: translateY(-4.8em); }
+  /* Bottom decorative line */
+  .line-bottom {
+    width: 1px;
+    height: 60px;
+    background: var(--gold-soft);
+    margin: 56px auto 0;
+    transform-origin: top;
+    transform: scaleY(0);
+    animation: lineDown 1.4s var(--ease) 1.6s forwards;
+  }
+  @keyframes lineDown {
+    to { transform: scaleY(1); }
   }
 
   /* CTA */
   .cta {
     display: inline-block;
-    margin-top: 56px;
-    padding: 18px 44px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.05rem;
-    letter-spacing: 0.35em;
-    color: #C9A84C;
-    background: transparent;
-    border: 1.5px solid #C9A84C;
-    text-decoration: none;
+    margin-top: 48px;
+    padding: 18px 48px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    border: 1px solid var(--gold-soft);
     text-transform: uppercase;
     position: relative;
     overflow: hidden;
-    transition: color 0.4s ease;
+    transition: color 0.5s var(--ease), border-color 0.5s var(--ease), letter-spacing 0.5s var(--ease);
   }
-
   .cta::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: #C9A84C;
+    background: var(--gold);
     transform: scaleX(0);
     transform-origin: right;
-    transition: transform 0.45s cubic-bezier(0.7, 0, 0.3, 1);
+    transition: transform 0.6s var(--ease);
     z-index: -1;
   }
-  .cta:hover { color: #0A0A0A; }
+  .cta:hover {
+    color: #0A0A0A;
+    border-color: var(--gold);
+    letter-spacing: 0.55em;
+  }
   .cta:hover::before {
     transform: scaleX(1);
     transform-origin: left;
   }
 
+  /* Scroll hint */
   .scroll-hint {
     position: absolute;
-    bottom: 32px;
+    bottom: 36px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 3;
-    font-size: 0.7rem;
-    letter-spacing: 0.4em;
-    color: #C9A84C;
-    opacity: 0.6;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.6rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    opacity: 0;
     text-transform: uppercase;
-  }
-
-  .scroll-hint::after {
-    content: '';
-    display: block;
-    width: 1px;
-    height: 36px;
-    background: #C9A84C;
-    margin: 12px auto 0;
-    animation: scrollLine 2s ease-in-out infinite;
-    transform-origin: top;
-  }
-
-  @keyframes scrollLine {
-    0%, 100% { transform: scaleY(0.3); opacity: 0.3; }
-    50%      { transform: scaleY(1);   opacity: 1; }
+    animation: reveal 1.4s var(--ease) 2.6s forwards;
   }
 
   @media (max-width: 600px) {
-    .eyebrow::before, .eyebrow::after { width: 20px; margin: 0 8px; }
-    .cta { padding: 14px 30px; }
     body { cursor: auto; }
     .cursor-dot, .cursor-circle { display: none; }
     a, button { cursor: pointer; }
+    .cta { padding: 14px 32px; letter-spacing: 0.4em; }
   }
 </style>
 </head>
 <body>
 
+<div class="page-fade"></div>
 <div class="cursor-dot"></div>
 <div class="cursor-circle"></div>
 
@@ -285,154 +283,104 @@
   <div class="vignette"></div>
 
   <div class="hero-content">
-    <div class="eyebrow">Visual Designer &nbsp;&middot;&nbsp; Cairo</div>
-    <h1 class="name">
-      <span class="glitch" data-text="MAHMOUD MAHER">MAHMOUD MAHER</span>
-    </h1>
-    <div class="tagline">
-      <span class="prefix">I Craft</span>
-      <span class="cycle">
-        <ul>
-          <li>Key Visuals.</li>
-          <li>Social Media.</li>
-          <li>Film Posters.</li>
-          <li>AI-Powered.</li>
-          <li>Key Visuals.</li>
-        </ul>
+    <div class="eyebrow reveal d1">Visual Designer &middot; Cairo</div>
+    <div class="line"></div>
+    <h1 class="name reveal d2">MAHMOUD<span class="space"></span>MAHER</h1>
+    <div class="tagline reveal d3">
+      <span class="prefix">I craft</span>
+      <span class="crossfade" id="crossfade">
+        <span class="active">Key Visuals</span>
+        <span>Social Media</span>
+        <span>Film Posters</span>
+        <span>AI-Powered</span>
       </span>
     </div>
-    <a href="#work" class="cta" data-hover>View My Work</a>
+    <div>
+      <a href="#work" class="cta reveal d4" data-hover>View My Work</a>
+    </div>
   </div>
 
   <div class="scroll-hint">Scroll</div>
 </section>
 
 <script>
-  // Custom cursor
+  /* Custom cursor */
   const dot = document.querySelector('.cursor-dot');
   const circle = document.querySelector('.cursor-circle');
-  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-  let circleX = mouseX, circleY = mouseY;
+  let mx = innerWidth/2, my = innerHeight/2;
+  let cx = mx, cy = my;
 
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+  addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
   });
 
-  function animateCircle() {
-    circleX += (mouseX - circleX) * 0.15;
-    circleY += (mouseY - circleY) * 0.15;
-    circle.style.transform = `translate(${circleX}px, ${circleY}px) translate(-50%, -50%)`;
-    requestAnimationFrame(animateCircle);
-  }
-  animateCircle();
+  (function tick() {
+    cx += (mx - cx) * 0.14;
+    cy += (my - cy) * 0.14;
+    circle.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+    requestAnimationFrame(tick);
+  })();
 
   document.querySelectorAll('a, button, [data-hover]').forEach(el => {
     el.addEventListener('mouseenter', () => circle.classList.add('hover'));
     el.addEventListener('mouseleave', () => circle.classList.remove('hover'));
   });
 
-  // Particle system
+  /* Crossfade cycling text */
+  const cf = document.getElementById('crossfade');
+  const items = cf.querySelectorAll('span');
+  let idx = 0;
+  setInterval(() => {
+    items[idx].classList.remove('active');
+    idx = (idx + 1) % items.length;
+    items[idx].classList.add('active');
+  }, 2800);
+
+  /* Subtle particles */
   const canvas = document.getElementById('particles');
   const ctx = canvas.getContext('2d');
   let W, H;
-  const particles = [];
-  const PARTICLE_COUNT = 110;
-  const mouse = { x: -9999, y: -9999, radius: 140 };
-
   function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+    W = canvas.width = innerWidth;
+    H = canvas.height = innerHeight;
   }
   resize();
-  window.addEventListener('resize', resize);
+  addEventListener('resize', resize);
 
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
-  window.addEventListener('mouseleave', () => {
-    mouse.x = -9999; mouse.y = -9999;
-  });
+  const COUNT = 30;
+  const particles = Array.from({ length: COUNT }, () => ({
+    x: Math.random() * W,
+    y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.12,
+    vy: (Math.random() - 0.5) * 0.12,
+    r: Math.random() * 1.2 + 0.3,
+    a: Math.random() * 0.35 + 0.08,
+    twinkle: Math.random() * Math.PI * 2,
+  }));
 
-  class Particle {
-    constructor() {
-      this.reset(true);
-    }
-    reset(initial = false) {
-      this.x = Math.random() * W;
-      this.y = initial ? Math.random() * H : Math.random() * H;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
-      this.size = Math.random() * 1.8 + 0.4;
-      this.baseAlpha = Math.random() * 0.6 + 0.2;
-      this.alpha = this.baseAlpha;
-    }
-    update() {
-      // Mouse repulsion / attraction
-      const dx = this.x - mouse.x;
-      const dy = this.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < mouse.radius) {
-        const force = (mouse.radius - dist) / mouse.radius;
-        this.x += (dx / dist) * force * 2.5;
-        this.y += (dy / dist) * force * 2.5;
-        this.alpha = Math.min(1, this.baseAlpha + force * 0.6);
-      } else {
-        this.alpha += (this.baseAlpha - this.alpha) * 0.05;
-      }
-
-      this.x += this.vx;
-      this.y += this.vy;
-
-      if (this.x < -10) this.x = W + 10;
-      if (this.x > W + 10) this.x = -10;
-      if (this.y < -10) this.y = H + 10;
-      if (this.y > H + 10) this.y = -10;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(201, 168, 76, ${this.alpha})`;
-      ctx.shadowColor = 'rgba(201, 168, 76, 0.8)';
-      ctx.shadowBlur = 8;
-      ctx.fill();
-    }
-  }
-
-  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
-
-  function drawConnections() {
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const a = particles[i], b = particles[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const d = Math.sqrt(dx * dx + dy * dy);
-        if (d < 110) {
-          const op = (1 - d / 110) * 0.18;
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(201, 168, 76, ${op})`;
-          ctx.lineWidth = 0.5;
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  function loop() {
+  function loop(t) {
     ctx.clearRect(0, 0, W, H);
-    ctx.shadowBlur = 0;
-    drawConnections();
     for (const p of particles) {
-      p.update();
-      p.draw();
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -5) p.x = W + 5;
+      if (p.x > W + 5) p.x = -5;
+      if (p.y < -5) p.y = H + 5;
+      if (p.y > H + 5) p.y = -5;
+
+      const flicker = 0.5 + 0.5 * Math.sin(t * 0.0008 + p.twinkle);
+      const alpha = p.a * (0.5 + flicker * 0.5);
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201, 168, 76, ${alpha})`;
+      ctx.shadowColor = 'rgba(201, 168, 76, 0.6)';
+      ctx.shadowBlur = 6;
+      ctx.fill();
     }
     requestAnimationFrame(loop);
   }
-  loop();
+  requestAnimationFrame(loop);
 </script>
 
 </body>
