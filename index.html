@@ -888,6 +888,120 @@
     border-color: var(--green);
   }
 
+  /* ============= SERVICES SECTION ============= */
+  .services {
+    position: relative;
+    padding: 140px 8vw;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .services::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px; height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--green));
+    opacity: 0.5;
+  }
+
+  .services-head {
+    max-width: 1300px;
+    margin: 0 auto 80px;
+    text-align: center;
+  }
+  .services-head .section-label {
+    justify-content: center;
+    display: inline-flex;
+    margin-bottom: 14px;
+  }
+  .services-head .section-label::before { display: none; }
+  .services-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #aaaaaa;
+    max-width: 680px;
+    margin: 24px auto 0;
+  }
+  .services-head .green-line {
+    margin: 28px auto 0;
+  }
+  .reveal-section.visible .services-head .green-line { width: 80px; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .svc-card {
+    background: #111111;
+    border: 1px solid #222222;
+    border-radius: 16px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  .reveal-section.visible .svc-card {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .svc-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(0,255,100,0.06) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease);
+    pointer-events: none;
+  }
+  .svc-card:hover {
+    border-color: var(--green);
+    box-shadow: 0 0 40px rgba(0,255,100,0.12), 0 20px 60px rgba(0,0,0,0.5);
+    transform: translateY(-4px);
+  }
+  .svc-card:hover::before { opacity: 1; }
+
+  .svc-icon {
+    width: 40px; height: 40px;
+    margin-bottom: 28px;
+    color: #888888;
+    transition: color 0.3s var(--ease), transform 0.3s var(--ease);
+    display: block;
+  }
+  .svc-card:hover .svc-icon {
+    color: var(--green);
+    transform: translateY(-4px);
+  }
+
+  .svc-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    line-height: 1.1;
+    transition: color 0.3s var(--ease);
+  }
+  .svc-card:hover .svc-title { color: var(--green); }
+
+  .svc-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: #888888;
+  }
+
   /* ============= RESPONSIVE ============= */
   @media (max-width: 1100px) {
     .grid { column-count: 2; }
@@ -941,12 +1055,18 @@
     .filters { gap: 8px; }
     .filter-btn { padding: 9px 16px; font-size: 0.62rem; letter-spacing: 0.25em; }
 
+    .services { padding: 100px 24px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .svc-card { padding: 28px; }
+
     .hero .content { padding: 18vh 20px 0; }
     .cards-stage { height: 48vh; bottom: -2vh; }
   }
 
   @media (max-width: 600px) {
-    .about, .portfolio { padding-left: 16px; padding-right: 16px; }
+    .about, .portfolio, .services { padding-left: 16px; padding-right: 16px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .services-subtitle { font-size: 0.95rem; }
     .nav { padding: 16px; }
     .nav.scrolled { padding: 12px 16px; }
     .grid { column-count: 1; column-gap: 0; }
@@ -991,6 +1111,7 @@
   <div class="links" id="navLinks">
     <a href="#about" data-hover>About</a>
     <a href="#work" data-hover>Work</a>
+    <a href="#services" data-hover>Services</a>
     <a href="#contact" data-hover>Contact</a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -1121,6 +1242,79 @@
     </div>
   </div>
   <div class="grid" id="grid"></div>
+</section>
+
+<section class="services reveal-section" id="services">
+  <div class="services-head">
+    <div class="section-label reveal-up d1">Services</div>
+    <h2 class="section-title reveal-up d2">What I <span class="accent">Do.</span></h2>
+    <p class="services-subtitle reveal-up d3">
+      I don't just deliver designs — I help brands communicate smarter,
+      look stronger, and grow faster. Every visual I create is built with
+      strategy, purpose, and the kind of creative instinct that turns
+      attention into results.
+    </p>
+    <div class="green-line reveal-up d4"></div>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="svc-card" style="transition-delay:0.05s">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </svg>
+      <div class="svc-title">Key Visual Design</div>
+      <p class="svc-desc">Designing hero visuals that set the tone for entire campaigns. Bold, clear, and brand-aligned — built to make your brand impossible to ignore.</p>
+    </div>
+
+    <div class="svc-card" style="transition-delay:0.15s">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      <div class="svc-title">Social Media Campaigns</div>
+      <p class="svc-desc">Stop-the-scroll visuals shaped by platform behavior, audience insight, and creative instinct that drive real engagement.</p>
+    </div>
+
+    <div class="svc-card" style="transition-delay:0.25s">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        <polyline points="7 9 10 12 13 9 17 13"/>
+      </svg>
+      <div class="svc-title">Film Poster Design</div>
+      <p class="svc-desc">Cinematic poster design that tells your story before a single word is read. Where creativity meets impact.</p>
+    </div>
+
+    <div class="svc-card" style="transition-delay:0.35s">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+        <line x1="6" y1="20" x2="6" y2="14"/>
+        <line x1="2" y1="20" x2="22" y2="20"/>
+      </svg>
+      <div class="svc-title">Infographic Design</div>
+      <p class="svc-desc">Complex data transformed into clear, compelling visuals that inform, persuade, and stick in the memory.</p>
+    </div>
+
+    <div class="svc-card" style="transition-delay:0.45s">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+      <div class="svc-title">AI-Powered Workflow</div>
+      <p class="svc-desc">End-to-end creative workflows using Midjourney, Runway, KlingAI and more — delivering faster, smarter, and more impactful results for your brand.</p>
+    </div>
+
+    <div class="svc-card" style="transition-delay:0.55s">
+      <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+        <polyline points="17 6 23 6 23 12"/>
+      </svg>
+      <div class="svc-title">Brand Growth Strategy</div>
+      <p class="svc-desc">Strategic visual thinking that goes beyond aesthetics — helping brands communicate their value, build trust, and grow their audience.</p>
+    </div>
+
+  </div>
 </section>
 
 <div class="lightbox" id="lightbox" aria-hidden="true">
