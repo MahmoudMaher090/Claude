@@ -730,18 +730,18 @@
     max-width: 1300px;
     margin: 60px auto 0;
     column-count: 3;
-    column-gap: 20px;
+    column-gap: 16px;
   }
   .work {
     break-inside: avoid;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
     cursor: none;
     border: 1px solid rgba(255,255,255,0.04);
-    transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    transition: transform 0.3s cubic-bezier(0.7,0,0.3,1), border-color 0.3s cubic-bezier(0.7,0,0.3,1), box-shadow 0.3s cubic-bezier(0.7,0,0.3,1), opacity 0.4s var(--ease);
     opacity: 0;
     transform: translateY(40px);
   }
@@ -759,13 +759,31 @@
   .work .label {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, transparent 70%);
+    background: rgba(0,0,0,0.6);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: 22px;
     opacity: 0;
-    transition: opacity 0.35s var(--ease);
+    transform: translateY(40%);
+    transition: opacity 0.3s cubic-bezier(0.7,0,0.3,1), transform 0.3s cubic-bezier(0.7,0,0.3,1);
+  }
+  .work .label .view {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .work .label .view::after {
+    content: '→';
+    font-size: 0.9rem;
+    letter-spacing: 0;
   }
   .work .label .cat {
     font-family: 'Inter', sans-serif;
@@ -785,13 +803,14 @@
     text-transform: uppercase;
   }
   .work:hover {
-    transform: scale(1.03);
+    transform: scale(1.04);
     border-color: var(--green);
     box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(0,255,100,0.2);
     z-index: 2;
   }
-  .work:hover .label { opacity: 1; }
+  .work:hover .label { opacity: 1; transform: translateY(0); }
   .work.hidden { display: none; }
+  .work.filter-out { opacity: 0; transform: translateY(20px) scale(0.96); }
 
   /* Lightbox */
   .lightbox {
@@ -1091,8 +1110,8 @@
 
 <section class="portfolio reveal-section" id="work">
   <div class="portfolio-head">
-    <div class="section-label reveal-up d1">My Work</div>
-    <h2 class="section-title reveal-up d2">Selected <span class="accent">Projects.</span></h2>
+    <div class="section-label reveal-up d1">Portfolio</div>
+    <h2 class="section-title reveal-up d2">My <span class="accent">Work.</span></h2>
     <div class="filters reveal-up d3" id="filters">
       <button class="filter-btn active" data-filter="all" data-hover>All</button>
       <button class="filter-btn" data-filter="key" data-hover>Key Visuals</button>
@@ -1280,15 +1299,15 @@
 
   /* Portfolio grid */
   const WORKS = [
-    { cat: 'film',   catLabel: 'Film Poster',     name: 'Crimson Hour',    grad: 'linear-gradient(160deg, #6B0F1A 0%, #1a0608 100%)', ratio: '3/4' },
-    { cat: 'key',    catLabel: 'Key Visual',      name: 'Northern Echo',   grad: 'linear-gradient(160deg, #0a3d62 0%, #060f1a 100%)', ratio: '4/5' },
-    { cat: 'social', catLabel: 'Social Campaign', name: 'Velvet Pulse',    grad: 'linear-gradient(160deg, #4a1d6b 0%, #110620 100%)', ratio: '3/4' },
-    { cat: 'info',   catLabel: 'Infographic',     name: 'Data Bloom',      grad: 'linear-gradient(160deg, #0b6b3a 0%, #051f12 100%)', ratio: '2/3' },
-    { cat: 'film',   catLabel: 'Film Poster',     name: 'Black Tide',      grad: 'linear-gradient(160deg, #1c1c1c 0%, #050505 100%)', ratio: '2/3' },
-    { cat: 'key',    catLabel: 'Key Visual',      name: 'Solar Drift',     grad: 'linear-gradient(160deg, #b8741a 0%, #1f1206 100%)', ratio: '3/4' },
-    { cat: 'social', catLabel: 'Social Media',    name: 'Neon Markets',    grad: 'linear-gradient(160deg, #00404a 0%, #001a1f 100%)', ratio: '4/5' },
-    { cat: 'info',   catLabel: 'Infographic',     name: 'Flow States',     grad: 'linear-gradient(160deg, #2d4a1d 0%, #0a1505 100%)', ratio: '3/4' },
-    { cat: 'film',   catLabel: 'Film Poster',     name: 'Quiet Storm',     grad: 'linear-gradient(160deg, #3a1f4d 0%, #0a0518 100%)', ratio: '2/3' },
+    { cat: 'key',    catLabel: 'Key Visuals',   name: 'Project 01', grad: 'linear-gradient(135deg, #1a1a2e, #16213e)', ratio: '2/3' },
+    { cat: 'social', catLabel: 'Social Media',  name: 'Project 02', grad: 'linear-gradient(135deg, #0f3460, #533483)', ratio: '2/3' },
+    { cat: 'film',   catLabel: 'Film Posters',  name: 'Project 03', grad: 'linear-gradient(135deg, #1a1a1a, #2d2d2d)', ratio: '2/3' },
+    { cat: 'info',   catLabel: 'Infographics',  name: 'Project 04', grad: 'linear-gradient(135deg, #0d1b2a, #1b2838)', ratio: '2/3' },
+    { cat: 'key',    catLabel: 'Key Visuals',   name: 'Project 05', grad: 'linear-gradient(135deg, #1a0a0a, #2d1515)', ratio: '2/3' },
+    { cat: 'social', catLabel: 'Social Media',  name: 'Project 06', grad: 'linear-gradient(135deg, #0a1a0a, #152d15)', ratio: '2/3' },
+    { cat: 'film',   catLabel: 'Film Posters',  name: 'Project 07', grad: 'linear-gradient(135deg, #1a1500, #2d2500)', ratio: '2/3' },
+    { cat: 'social', catLabel: 'Social Media',  name: 'Project 08', grad: 'linear-gradient(135deg, #0a0a1a, #15152d)', ratio: '2/3' },
+    { cat: 'info',   catLabel: 'Infographics',  name: 'Project 09', grad: 'linear-gradient(135deg, #1a0a1a, #2d152d)', ratio: '2/3' },
   ];
 
   const grid = document.getElementById('grid');
@@ -1306,6 +1325,7 @@
       <div class="label">
         <div class="cat">${w.catLabel}</div>
         <div class="name">${w.name}</div>
+        <div class="view">View Project</div>
       </div>
     `;
     a.addEventListener('click', (e) => {
@@ -1322,10 +1342,17 @@
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const f = btn.dataset.filter;
-      document.querySelectorAll('.work').forEach(w => {
-        const show = f === 'all' || w.dataset.cat === f;
-        w.classList.toggle('hidden', !show);
-      });
+      const works = document.querySelectorAll('.work');
+      works.forEach(w => w.classList.add('filter-out'));
+      setTimeout(() => {
+        works.forEach(w => {
+          const show = f === 'all' || w.dataset.cat === f;
+          w.classList.toggle('hidden', !show);
+        });
+        requestAnimationFrame(() => {
+          works.forEach(w => w.classList.remove('filter-out'));
+        });
+      }, 280);
     });
   });
 
