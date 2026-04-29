@@ -365,10 +365,40 @@
     gap: 80px;
     max-width: 1300px;
     margin: 0 auto;
+    align-items: center;
   }
 
   .about-left {
     position: relative;
+  }
+
+  .portrait {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 3 / 4;
+    margin-top: 40px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--green);
+    box-shadow:
+      0 0 40px rgba(0, 255, 100, 0.18),
+      0 0 80px rgba(0, 255, 100, 0.08),
+      0 20px 50px rgba(0, 0, 0, 0.6);
+    background: #111;
+  }
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .portrait::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 40%);
+    pointer-events: none;
   }
   .big-num {
     font-family: 'Barlow Condensed', sans-serif;
@@ -633,6 +663,9 @@
       <div class="section-label reveal-up d1">About Me</div>
       <h2 class="section-title reveal-up d2">About<br><span class="accent">Me.</span></h2>
       <div class="green-line"></div>
+      <div class="portrait reveal-up d3">
+        <img src="mahmoud.png" alt="Mahmoud Maher">
+      </div>
     </div>
 
     <div class="about-right">
