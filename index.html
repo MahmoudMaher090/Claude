@@ -257,13 +257,23 @@
     font-weight: 300;
     font-size: 1rem;
     letter-spacing: 0.02em;
-    color: var(--muted);
+    color: var(--white);
     margin-top: 22px;
     max-width: 540px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.6;
+    position: relative;
+    height: 1.6em;
   }
+  .body-text .phrase {
+    position: absolute;
+    left: 0; right: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.7s var(--ease);
+  }
+  .body-text .phrase.active { opacity: 1; }
 
   /* CTA pill */
   .cta {
@@ -356,13 +366,16 @@
   </div>
 
   <div class="content">
-    <div class="subtitle reveal d1">Senior Graphic Designer &middot; Cairo</div>
+    <div class="subtitle reveal d1">Visual Designer &middot; Egypt</div>
     <h1 class="headline reveal d2">
       Crafting Visuals,<br>
       Telling <span class="accent">Stories</span>
     </h1>
-    <p class="body-text reveal d3">
-      Impactful visuals that combine strategy, style, and speed.
+    <p class="body-text reveal d3" id="cyclePhrase">
+      <span class="phrase active">I Craft Film Posters.</span>
+      <span class="phrase">I Craft Social Media Visuals.</span>
+      <span class="phrase">I Craft AI-Powered Designs.</span>
+      <span class="phrase">I Craft Key Visuals.</span>
     </p>
     <a href="#work" class="cta reveal d4" data-hover>
       View My Work
@@ -399,6 +412,15 @@
     el.addEventListener('mouseenter', () => circle.classList.add('hover'));
     el.addEventListener('mouseleave', () => circle.classList.remove('hover'));
   });
+
+  /* Cycling phrase crossfade */
+  const phrases = document.querySelectorAll('#cyclePhrase .phrase');
+  let pIdx = 0;
+  setInterval(() => {
+    phrases[pIdx].classList.remove('active');
+    pIdx = (pIdx + 1) % phrases.length;
+    phrases[pIdx].classList.add('active');
+  }, 2500);
 
   /* Cards data — 5 placeholder gradients */
   const CARDS = [
