@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Mahmoud Maher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg:    #0A0A0A;
+    --bg2:   #111111;
+    --bg3:   #1a1a1a;
+    --green: #00FF64;
+    --white: #FFFFFF;
+    --muted: #888888;
+    --border:#2a2a2a;
+    --ease:  cubic-bezier(0.7, 0, 0.3, 1);
+  }
+  html, body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    height: 100%;
+  }
+
+  /* ── Login screen ── */
+  #loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  #loginScreen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%,   rgba(0,255,100,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 100%, rgba(0,255,100,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .login-box {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 52px 44px 44px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,255,100,0.06);
+    animation: loginIn 0.7s var(--ease) both;
+  }
+  @keyframes loginIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .login-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    letter-spacing: 0.2em;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .login-logo span { color: var(--green); }
+
+  .login-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 36px;
+    display: block;
+  }
+
+  .login-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    color: var(--white);
+  }
+
+  .field {
+    margin-bottom: 20px;
+  }
+  .field label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .field input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    letter-spacing: 0.08em;
+  }
+  .field input::placeholder { color: #444; }
+  .field input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(0,255,100,0.08);
+  }
+
+  .login-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 16px;
+    background: var(--green);
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #0A0A0A;
+    cursor: pointer;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+  .login-btn:hover {
+    background: transparent;
+    color: var(--green);
+    box-shadow: 0 0 24px rgba(0,255,100,0.2);
+  }
+  .login-btn:active { transform: scale(0.98); }
+
+  .login-error {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(255, 60, 60, 0.08);
+    border: 1px solid rgba(255, 60, 60, 0.3);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #ff6b6b;
+    letter-spacing: 0.04em;
+    display: none;
+    text-align: center;
+  }
+  .login-error.show { display: block; animation: shake 0.4s var(--ease); }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25%      { transform: translateX(-8px); }
+    75%      { transform: translateX(8px); }
+  }
+
+  .login-footer {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #444;
+    letter-spacing: 0.04em;
+  }
+  .login-footer a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .login-footer a:hover { color: var(--green); }
+
+  /* ── Admin panel (hidden until logged in) ── */
+  #adminPanel { display: none; min-height: 100vh; }
+
+  /* Topbar */
+  .admin-topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 60px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    gap: 24px;
+    z-index: 100;
+  }
+  .topbar-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .topbar-logo span { color: var(--green); }
+  .topbar-badge {
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(0,255,100,0.08);
+    border: 1px solid rgba(0,255,100,0.2);
+    border-radius: 999px;
+    padding: 3px 10px;
+  }
+  .topbar-spacer { flex: 1; }
+  .topbar-nav { display: flex; gap: 4px; }
+  .topbar-nav button {
+    padding: 7px 16px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .topbar-nav button:hover { color: var(--white); border-color: var(--border); }
+  .topbar-nav button.active { color: var(--green); border-color: rgba(0,255,100,0.3); background: rgba(0,255,100,0.06); }
+  .topbar-logout {
+    padding: 7px 16px;
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .topbar-logout:hover { border-color: #ff6b6b; color: #ff6b6b; }
+
+  /* Content area */
+  .admin-body {
+    padding: 80px 32px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Tabs */
+  .admin-tab { display: none; }
+  .admin-tab.active { display: block; animation: fadeUp 0.4s var(--ease); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section heading */
+  .section-head {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-head h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white);
+  }
+  .section-head h2 span { color: var(--green); }
+  .section-head p {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Stat cards (dashboard) */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 20px;
+    transition: border-color 0.25s;
+  }
+  .stat-card:hover { border-color: rgba(0,255,100,0.3); }
+  .stat-card .num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2.4rem;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card .lbl {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Project cards (dashboard preview) */
+  .proj-list { display: flex; flex-direction: column; gap: 12px; }
+  .proj-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    transition: border-color 0.25s;
+  }
+  .proj-row:hover { border-color: rgba(0,255,100,0.25); }
+  .proj-swatch {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .proj-row-info { flex: 1; min-width: 0; }
+  .proj-row-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .proj-row-client {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .proj-row-cat {
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(0,255,100,0.08);
+    border: 1px solid rgba(0,255,100,0.2);
+    border-radius: 999px;
+    padding: 3px 10px;
+    flex-shrink: 0;
+  }
+  .proj-row-year { font-size: 0.75rem; color: #555; flex-shrink: 0; }
+
+  /* Textarea editor */
+  .editor-block { margin-bottom: 32px; }
+  .editor-label {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 10px;
+  }
+  .editor-desc {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  textarea.code-area {
+    width: 100%;
+    background: #0d0d0d;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #e0e0e0;
+    line-height: 1.65;
+    outline: none;
+    resize: vertical;
+    min-height: 200px;
+    transition: border-color 0.3s;
+  }
+  textarea.code-area:focus { border-color: var(--green); }
+  textarea.bio-area {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.7;
+    outline: none;
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.3s;
+  }
+  textarea.bio-area:focus { border-color: var(--green); }
+
+  /* Save button */
+  .save-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .btn-save {
+    padding: 13px 32px;
+    background: var(--green);
+    border: 1px solid var(--green);
+    border-radius: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #0A0A0A;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+  }
+  .btn-save:hover { background: transparent; color: var(--green); box-shadow: 0 0 20px rgba(0,255,100,0.15); }
+  .btn-copy {
+    padding: 13px 24px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-copy:hover { border-color: var(--green); color: var(--green); }
+  .save-status {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--green);
+    opacity: 0;
+    transition: opacity 0.3s;
+    letter-spacing: 0.04em;
+  }
+  .save-status.show { opacity: 1; }
+
+  /* Info box */
+  .info-box {
+    background: rgba(0,255,100,0.04);
+    border: 1px solid rgba(0,255,100,0.15);
+    border-left: 3px solid var(--green);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+  .info-box strong { color: var(--green); font-weight: 500; }
+
+  /* Services list */
+  .services-list { display: flex; flex-direction: column; gap: 16px; }
+  .svc-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+  .svc-item label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .svc-item input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--white);
+    outline: none;
+    margin-bottom: 10px;
+    transition: border-color 0.3s;
+  }
+  .svc-item input:focus { border-color: var(--green); }
+  .svc-item textarea {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: #ccc;
+    outline: none;
+    resize: vertical;
+    min-height: 72px;
+    line-height: 1.6;
+    transition: border-color 0.3s;
+  }
+  .svc-item textarea:focus { border-color: var(--green); }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .admin-topbar { padding: 0 16px; gap: 12px; }
+    .topbar-nav { display: none; }
+    .admin-body { padding: 80px 16px 60px; }
+    .login-box { padding: 36px 24px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     LOGIN SCREEN
+══════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">M.M<span>.</span></div>
+    <span class="login-label">Admin Panel</span>
+    <h1 class="login-title">Welcome<br>Back.</h1>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label for="passInput">Password</label>
+        <input type="password" id="passInput" placeholder="Enter password…" autofocus>
+      </div>
+      <button type="submit" class="login-btn">Enter Panel &rarr;</button>
+    </form>
+
+    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+
+    <div class="login-footer">
+      <a href="index.html">&larr; Back to Portfolio</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     ADMIN PANEL
+══════════════════════════════════════════ -->
+<div id="adminPanel">
+
+  <!-- Topbar -->
+  <div class="admin-topbar">
+    <div class="topbar-logo">M.M<span>.</span></div>
+    <span class="topbar-badge">Admin</span>
+    <div class="topbar-nav">
+      <button class="active" onclick="showTab('dashboard', this)">Dashboard</button>
+      <button onclick="showTab('projects',  this)">Projects</button>
+      <button onclick="showTab('bio',       this)">Bio</button>
+      <button onclick="showTab('services',  this)">Services</button>
+    </div>
+    <div class="topbar-spacer"></div>
+    <button class="topbar-logout" onclick="logout()">Log Out</button>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- ── DASHBOARD ── -->
+    <div class="admin-tab active" id="tab-dashboard">
+      <div class="section-head">
+        <h2>Dashboard <span>Overview.</span></h2>
+        <p>Quick snapshot of your portfolio content.</p>
+      </div>
+      <div class="stat-row" id="statRow"></div>
+      <div class="section-head" style="margin-top:40px;">
+        <h2>All <span>Projects.</span></h2>
+      </div>
+      <div class="proj-list" id="dashProjList"></div>
+    </div>
+
+    <!-- ── PROJECTS ── -->
+    <div class="admin-tab" id="tab-projects">
+      <div class="section-head">
+        <h2>Edit <span>Projects.</span></h2>
+        <p>Modify the full <code style="color:var(--green);font-size:0.85em">PROJECTS</code> array. Copy the updated code and paste it into <strong>projects-data.js</strong>.</p>
+      </div>
+      <div class="info-box">
+        <strong>How to save:</strong> Edit the JSON below, click <strong>Copy to Clipboard</strong>, then paste the content into your <strong>projects-data.js</strong> file and redeploy.
+      </div>
+      <div class="editor-block">
+        <span class="editor-label">projects-data.js — PROJECTS array</span>
+        <textarea class="code-area" id="projectsEditor" rows="30" spellcheck="false"></textarea>
+      </div>
+      <div class="save-bar">
+        <button class="btn-copy" onclick="copyProjects()">Copy to Clipboard</button>
+        <span class="save-status" id="projCopyStatus">Copied!</span>
+      </div>
+    </div>
+
+    <!-- ── BIO ── -->
+    <div class="admin-tab" id="tab-bio">
+      <div class="section-head">
+        <h2>Edit <span>Bio.</span></h2>
+        <p>Update your About Me paragraph. Copy the output and paste it into <strong>index.html</strong> inside <code style="color:var(--green);font-size:0.85em">.bio</code>.</p>
+      </div>
+      <div class="info-box">
+        <strong>How to save:</strong> Edit the text below, click <strong>Copy HTML</strong>, then paste into the <code style="color:var(--green)">.bio</code> paragraph in <strong>index.html</strong>.
+      </div>
+
+      <div class="editor-block">
+        <span class="editor-label">Bio Text (HTML allowed)</span>
+        <p class="editor-desc">Use <code>&lt;strong&gt;</code> tags for bold highlights.</p>
+        <textarea class="bio-area" id="bioEditor" rows="6">I'm <strong>Mahmoud Maher</strong>, a Senior Graphic Designer with <strong>8+ years of experience</strong>
+        including strong exposure to the <strong>GCC market</strong>. I design smart, impactful visuals
+        that combine strategy, style, and speed — and I build complete <strong>AI-powered workflows</strong>
+        that streamline the entire creative process from concept to delivery.</textarea>
+      </div>
+
+      <div class="editor-block">
+        <span class="editor-label">Highlight Quote</span>
+        <p class="editor-desc">The italic callout block under the stats.</p>
+        <textarea class="bio-area" id="highlightEditor" rows="3">I don't just design — I build end-to-end AI-powered creative workflows
+        that combine tools like Midjourney, Runway, and KlingAI to deliver
+        faster, smarter, and more impactful results.</textarea>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn-copy" onclick="copyBio()">Copy Bio HTML</button>
+        <span class="save-status" id="bioCopyStatus">Copied!</span>
+      </div>
+    </div>
+
+    <!-- ── SERVICES ── -->
+    <div class="admin-tab" id="tab-services">
+      <div class="section-head">
+        <h2>Edit <span>Services.</span></h2>
+        <p>Update service titles and descriptions. Copy the generated HTML and paste into <strong>index.html</strong>.</p>
+      </div>
+      <div class="info-box">
+        <strong>How to save:</strong> Edit the fields, click <strong>Copy Services HTML</strong>, then replace the <code style="color:var(--green)">.services-grid</code> content in <strong>index.html</strong>.
+      </div>
+      <div class="services-list" id="servicesList"></div>
+      <div class="save-bar" style="margin-top:24px;">
+        <button class="btn-copy" onclick="copyServices()">Copy Services HTML</button>
+        <span class="save-status" id="svcCopyStatus">Copied!</span>
+      </div>
+    </div>
+
+  </div><!-- /admin-body -->
+</div><!-- /adminPanel -->
+
+<script src="projects-data.js"></script>
+<script>
+  /* ── Auth ── */
+  const PASS = 'admin123';
+
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const val = document.getElementById('passInput').value;
+    if (val === PASS) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminPanel').style.display  = 'block';
+      initAdmin();
+    } else {
+      const err = document.getElementById('loginError');
+      err.classList.remove('show');
+      void err.offsetWidth;
+      err.classList.add('show');
+      document.getElementById('passInput').value = '';
+    }
+  });
+
+  function logout() {
+    document.getElementById('adminPanel').style.display  = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('passInput').value = '';
+  }
+
+  /* ── Tab switching ── */
+  function showTab(name, btn) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.topbar-nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ── Init admin content ── */
+  function initAdmin() {
+    buildDashboard();
+    buildProjectsEditor();
+    buildServicesList();
+  }
+
+  /* Dashboard */
+  function buildDashboard() {
+    const cats = { key: 0, social: 0, info: 0, film: 0 };
+    PROJECTS.forEach(p => { if (cats[p.category] !== undefined) cats[p.category]++; });
+
+    const statRow = document.getElementById('statRow');
+    statRow.innerHTML = '';
+    const stats = [
+      { num: PROJECTS.length,  lbl: 'Total Projects' },
+      { num: cats.key,         lbl: 'Key Visuals' },
+      { num: cats.social,      lbl: 'Social Media' },
+      { num: cats.film + cats.info, lbl: 'Posters & Info' },
+    ];
+    stats.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'stat-card';
+      card.innerHTML = `<div class="num">${String(s.num).padStart(2,'0')}</div><div class="lbl">${s.lbl}</div>`;
+      statRow.appendChild(card);
+    });
+
+    const list = document.getElementById('dashProjList');
+    list.innerHTML = '';
+    PROJECTS.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'proj-row';
+      row.innerHTML = `
+        <div class="proj-swatch" style="background:${p.coverGrad}"></div>
+        <div class="proj-row-info">
+          <div class="proj-row-title">${p.title}</div>
+          <div class="proj-row-client">${p.client}</div>
+        </div>
+        <span class="proj-row-cat">${p.categoryLabel}</span>
+        <span class="proj-row-year">${p.year}</span>
+      `;
+      list.appendChild(row);
+    });
+  }
+
+  /* Projects editor */
+  function buildProjectsEditor() {
+    const formatted = 'const PROJECTS = ' + JSON.stringify(PROJECTS, null, 2) + ';';
+    document.getElementById('projectsEditor').value = formatted;
+  }
+
+  function copyProjects() {
+    navigator.clipboard.writeText(document.getElementById('projectsEditor').value).then(() => {
+      flashStatus('projCopyStatus');
+    });
+  }
+
+  /* Bio copy */
+  function copyBio() {
+    const bio  = document.getElementById('bioEditor').value.trim();
+    const hl   = document.getElementById('highlightEditor').value.trim();
+    const html = `<!-- Bio -->\n<p class="bio reveal-up d1">\n  ${bio}\n</p>\n\n<!-- Highlight -->\n<div class="highlight reveal-up d3">\n  ${hl}\n</div>`;
+    navigator.clipboard.writeText(html).then(() => flashStatus('bioCopyStatus'));
+  }
+
+  /* Services */
+  const SERVICES_DATA = [
+    { title: 'Key Visual Design',       desc: 'Designing hero visuals that set the tone for entire campaigns. Bold, clear, and brand-aligned — built to make your brand impossible to ignore.' },
+    { title: 'Social Media Campaigns',  desc: 'Stop-the-scroll visuals shaped by platform behavior, audience insight, and creative instinct that drive real engagement.' },
+    { title: 'Film Poster Design',      desc: 'Cinematic poster design that tells your story before a single word is read. Where creativity meets impact.' },
+    { title: 'Infographic Design',      desc: 'Complex data transformed into clear, compelling visuals that inform, persuade, and stick in the memory.' },
+    { title: 'AI-Powered Workflow',     desc: 'End-to-end creative workflows using Midjourney, Runway, KlingAI and more — delivering faster, smarter, and more impactful results for your brand.' },
+    { title: 'Brand Growth Strategy',   desc: 'Strategic visual thinking that goes beyond aesthetics — helping brands communicate their value, build trust, and grow their audience.' },
+  ];
+
+  function buildServicesList() {
+    const list = document.getElementById('servicesList');
+    SERVICES_DATA.forEach((s, i) => {
+      const item = document.createElement('div');
+      item.className = 'svc-item';
+      item.innerHTML = `
+        <label>Service ${i + 1} — Title</label>
+        <input type="text" class="svc-title-input" value="${s.title}">
+        <label style="margin-top:4px;">Description</label>
+        <textarea class="svc-desc-input" rows="2">${s.desc}</textarea>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  function copyServices() {
+    const items = document.querySelectorAll('.svc-item');
+    let html = '';
+    items.forEach((item, i) => {
+      const title = item.querySelector('.svc-title-input').value;
+      const desc  = item.querySelector('.svc-desc-input').value;
+      html += `\n    <div class="svc-card" style="transition-delay:${(i * 0.1).toFixed(2)}s">\n      <div class="svc-title">${title}</div>\n      <p class="svc-desc">${desc}</p>\n    </div>`;
+    });
+    navigator.clipboard.writeText(html.trim()).then(() => flashStatus('svcCopyStatus'));
+  }
+
+  /* Flash status helper */
+  function flashStatus(id) {
+    const el = document.getElementById(id);
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2200);
+  }
+</script>
+</body>
+</html>
