@@ -351,8 +351,8 @@
 
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1.6fr;
-    gap: 80px;
+    grid-template-columns: 0.7fr 1.5fr;
+    gap: 40px;
     max-width: 1300px;
     margin: 0 auto;
     align-items: center;
@@ -820,27 +820,37 @@
   .nf-card {
     flex: 0 0 200px;
     height: 300px;
-    border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;     /* outer: allows scale to escape clip */
     position: relative;
     cursor: none;
     scroll-snap-align: start;
-    border: 1px solid rgba(255,255,255,0.05);
     transition:
       transform    400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      box-shadow   400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
       opacity      400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform-origin: center bottom;
+    z-index: 1;
   }
   .nf-card:hover {
     transform: scale(1.15) translateZ(0);
+    z-index: 10;
+  }
+
+  /* inner wrapper: clip + border + glow live here */
+  .nf-card-inner {
+    position: absolute; inset: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition:
+      box-shadow   400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .nf-card:hover .nf-card-inner {
     border-color: var(--green);
     box-shadow:
       0 24px 64px rgba(0,0,0,0.9),
       0 0 0 1px rgba(0,255,100,0.5),
       0 0 50px rgba(0,255,100,0.3);
-    z-index: 10;
   }
 
   .nf-thumb {

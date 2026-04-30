@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project — Mahmoud Maher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  /* ===== PROJECT DETAIL ===== */
+
+  .detail-hero {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    min-height: 420px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  .detail-hero-bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.05);
+    transition: transform 8s ease;
+  }
+  .detail-hero-bg.loaded { transform: scale(1); }
+  .detail-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,1) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.2) 100%);
+  }
+  .detail-hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 8vw 60px;
+    width: 100%;
+  }
+  .detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 24px;
+    transition: color 0.3s var(--ease);
+  }
+  .detail-back:hover { color: var(--green); }
+  .detail-back svg { width: 16px; height: 16px; }
+  .detail-cat-tag {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--green);
+    border: 1px solid rgba(0,255,100,0.4);
+    border-radius: 999px;
+    padding: 5px 14px;
+    margin-bottom: 18px;
+  }
+  .detail-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 6vw, 6rem);
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 0.95;
+    max-width: 900px;
+  }
+
+  /* ===== BODY ===== */
+  .detail-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 8vw 140px;
+  }
+
+  /* Meta row */
+  .detail-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid #1e1e1e;
+    border-bottom: 1px solid #1e1e1e;
+    margin-bottom: 80px;
+    padding: 36px 0;
+  }
+  .detail-meta-item {
+    padding: 0 32px 0 0;
+    border-right: 1px solid #1e1e1e;
+  }
+  .detail-meta-item:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
+  .detail-meta-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .detail-meta-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+  }
+
+  /* Two-column content */
+  .detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+  }
+  .detail-block-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .detail-block-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--green);
+  }
+  .detail-block-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--white);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    line-height: 1;
+  }
+  .detail-block-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: #bbb;
+  }
+
+  /* Solutions */
+  .detail-solutions {
+    margin-bottom: 80px;
+  }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .solution-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 24px;
+    background: #0f0f0f;
+    border: 1px solid #1e1e1e;
+    border-radius: 10px;
+    transition: border-color 0.3s var(--ease);
+  }
+  .solution-item:hover { border-color: rgba(0,255,100,0.3); }
+  .solution-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: rgba(0,255,100,0.3);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 36px;
+  }
+  .solution-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.88rem;
+    color: #ccc;
+    line-height: 1.6;
+    padding-top: 4px;
+  }
+
+  /* Tools */
+  .detail-tools {
+    margin-bottom: 80px;
+  }
+  .tools-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+  .tool-tag {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid #2a2a2a;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #ccc;
+    letter-spacing: 0.04em;
+    transition: border-color 0.3s var(--ease), color 0.3s var(--ease);
+  }
+  .tool-tag:hover { border-color: var(--green); color: var(--green); }
+
+  /* Gallery */
+  .detail-gallery {
+    margin-bottom: 100px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .gallery-item {
+    aspect-ratio: 4/3;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: none;
+    border: 1px solid #1e1e1e;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .gallery-item:hover { border-color: var(--green); transform: scale(1.02); }
+  .gallery-item:first-child { grid-column: span 2; aspect-ratio: 16/9; }
+  .gallery-bg {
+    position: absolute; inset: 0;
+  }
+  .gallery-num {
+    position: absolute; inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 4rem;
+    color: rgba(255,255,255,0.07);
+    pointer-events: none;
+  }
+
+  /* Lightbox */
+  .lb {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.94);
+    backdrop-filter: blur(10px);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease);
+  }
+  .lb.open { opacity: 1; pointer-events: auto; }
+  .lb-inner {
+    position: relative;
+    max-width: 900px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    transform: scale(0.92);
+    transition: transform 0.4s var(--ease);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,255,100,0.2);
+  }
+  .lb.open .lb-inner { transform: scale(1); }
+  .lb-img { width: 100%; aspect-ratio: 4/3; display: block; }
+  .lb-close {
+    position: absolute;
+    top: -52px; right: 0;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    cursor: none;
+    transition: all 0.3s var(--ease);
+  }
+  .lb-close:hover { background: var(--green); color: #0a0a0a; border-color: var(--green); }
+
+  /* Next project */
+  .detail-next {
+    border-top: 1px solid #1e1e1e;
+    padding-top: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .detail-next-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  .detail-next-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 2rem;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: color 0.3s var(--ease);
+  }
+  .detail-next-link:hover .detail-next-title { color: var(--green); }
+  .detail-next-link {
+    flex: 1;
+    text-align: right;
+  }
+  .detail-next-arrow {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    flex-shrink: 0;
+    transition: border-color 0.3s var(--ease), color 0.3s var(--ease), background 0.3s var(--ease);
+  }
+  .detail-next-link:hover .detail-next-arrow {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(0,255,100,0.06);
+  }
+  .detail-next-arrow svg { width: 22px; height: 22px; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .detail-meta { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .detail-meta-item { border-right: none; padding: 0; }
+    .detail-meta-item:last-child { padding: 0; }
+    .detail-content { grid-template-columns: 1fr; gap: 48px; }
+    .solutions-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item:first-child { grid-column: span 2; }
+    .detail-body { padding: 60px 24px 100px; }
+    .detail-hero-content { padding: 0 24px 48px; }
+  }
+  @media (max-width: 600px) {
+    .detail-hero { height: 60vh; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:first-child { grid-column: span 1; aspect-ratio: 4/3; }
+    .detail-next { flex-direction: column; align-items: flex-start; }
+    .detail-next-link { text-align: left; }
+    .gallery-item { cursor: pointer; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-fade"></div>
+<div class="cursor-dot"></div>
+<div class="cursor-circle"></div>
+
+<nav class="nav scrolled" id="nav">
+  <a href="index.html" class="brand" data-hover>M.M<span class="dot">.</span></a>
+  <div class="links" id="navLinks">
+    <a href="index.html" data-hover>Home</a>
+    <a href="index.html#about" data-hover>About</a>
+    <a href="projects.html" data-hover style="color:var(--green);">Work</a>
+    <a href="index.html#services" data-hover>Services</a>
+    <a href="index.html#contact" data-hover>Contact</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="detail-hero" id="detailHero">
+  <div class="detail-hero-bg" id="heroImg"></div>
+  <div class="detail-hero-overlay"></div>
+  <div class="detail-hero-content">
+    <a href="projects.html" class="detail-back" data-hover>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="11 18 5 12 11 6"/>
+      </svg>
+      All Projects
+    </a>
+    <div class="detail-cat-tag" id="detailCat"></div>
+    <h1 class="detail-title" id="detailTitle"></h1>
+  </div>
+</section>
+
+<!-- BODY -->
+<div class="detail-body">
+
+  <!-- Meta -->
+  <div class="detail-meta">
+    <div class="detail-meta-item">
+      <div class="detail-meta-label">Client</div>
+      <div class="detail-meta-value" id="metaClient"></div>
+    </div>
+    <div class="detail-meta-item" style="padding-left:32px">
+      <div class="detail-meta-label">Category</div>
+      <div class="detail-meta-value" id="metaCat"></div>
+    </div>
+    <div class="detail-meta-item" style="padding-left:32px">
+      <div class="detail-meta-label">Year</div>
+      <div class="detail-meta-value" id="metaYear"></div>
+    </div>
+    <div class="detail-meta-item">
+      <div class="detail-meta-label">Primary Tool</div>
+      <div class="detail-meta-value" id="metaTool"></div>
+    </div>
+  </div>
+
+  <!-- Challenge + Solution -->
+  <div class="detail-content">
+    <div>
+      <div class="detail-block-label">The Challenge</div>
+      <h2 class="detail-block-title">Brief &amp;<br>Approach.</h2>
+      <p class="detail-block-text" id="detailChallenge"></p>
+    </div>
+    <div>
+      <div class="detail-block-label">The Solution</div>
+      <h2 class="detail-block-title">How It<br>Was Done.</h2>
+      <p class="detail-block-text" id="detailSolution"></p>
+    </div>
+  </div>
+
+  <!-- Solutions list -->
+  <div class="detail-solutions">
+    <div class="detail-block-label">Solutions Delivered</div>
+    <div class="solutions-grid" id="solutionsGrid"></div>
+  </div>
+
+  <!-- Tools -->
+  <div class="detail-tools">
+    <div class="detail-block-label">Tools &amp; Software</div>
+    <div class="tools-tags" id="toolsTags"></div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="detail-gallery">
+    <div class="detail-block-label">Project Gallery</div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+  <!-- Next project -->
+  <div class="detail-next">
+    <div>
+      <div class="detail-next-label">Next Project</div>
+      <div class="detail-next-title" id="nextTitle"></div>
+    </div>
+    <a class="detail-next-link" id="nextLink" data-hover>
+      <div class="detail-next-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lb" id="lb">
+  <div class="lb-inner">
+    <button class="lb-close" id="lbClose" data-hover>&times;</button>
+    <div class="lb-img" id="lbImg"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p class="copy">&copy; 2025 Mahmoud Maher. All rights reserved.</p>
+  <p class="built">Designed &amp; Built with passion.</p>
+</footer>
+
+<script src="js/projects-data.js"></script>
+<script>
+  /* Cursor */
+  const dot    = document.querySelector('.cursor-dot');
+  const circle = document.querySelector('.cursor-circle');
+  let mx = innerWidth/2, my = innerHeight/2, cx = mx, cy = my;
+  addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+  });
+  (function tick() {
+    cx += (mx-cx)*0.14; cy += (my-cy)*0.14;
+    circle.style.transform = `translate(${cx}px,${cy}px) translate(-50%,-50%)`;
+    requestAnimationFrame(tick);
+  })();
+  function addHover(els) {
+    els.forEach(el => {
+      el.addEventListener('mouseenter', () => circle.classList.add('hover'));
+      el.addEventListener('mouseleave', () => circle.classList.remove('hover'));
+    });
+  }
+  addHover(document.querySelectorAll('a, button, [data-hover]'));
+
+  /* Navbar */
+  const nav = document.getElementById('nav');
+  const hamburger = document.getElementById('hamburger');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('#navLinks a').forEach(a =>
+    a.addEventListener('click', () => nav.classList.remove('open'))
+  );
+
+  /* Read project ID from URL */
+  const params  = new URLSearchParams(location.search);
+  const id      = params.get('id');
+  const project = PROJECTS.find(p => p.id === id) || PROJECTS[0];
+  const nextPrj = PROJECTS.find(p => p.id === project.next) || PROJECTS[0];
+
+  /* Set page title */
+  document.title = `${project.title} — Mahmoud Maher`;
+
+  /* Hero */
+  const heroImg = document.getElementById('heroImg');
+  heroImg.style.background = project.coverGrad;
+  if (project.cover) {
+    const img = new Image();
+    img.onload = () => {
+      heroImg.style.backgroundImage = `url(${project.cover})`;
+      heroImg.style.backgroundSize = 'cover';
+      heroImg.style.backgroundPosition = 'center';
+      heroImg.classList.add('loaded');
+    };
+    img.src = project.cover;
+  }
+
+  document.getElementById('detailCat').textContent   = project.categoryLabel;
+  document.getElementById('detailTitle').textContent  = project.title;
+  document.getElementById('metaClient').textContent   = project.client;
+  document.getElementById('metaCat').textContent      = project.categoryLabel;
+  document.getElementById('metaYear').textContent     = project.year;
+  document.getElementById('metaTool').textContent     = project.tools[0];
+  document.getElementById('detailChallenge').textContent = project.challenge;
+  document.getElementById('detailSolution').textContent  = project.solution;
+
+  /* Solutions */
+  const sg = document.getElementById('solutionsGrid');
+  project.solutions.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'solution-item';
+    div.innerHTML = `
+      <span class="solution-num">0${i+1}</span>
+      <span class="solution-text">${s}</span>
+    `;
+    sg.appendChild(div);
+  });
+
+  /* Tools */
+  const tt = document.getElementById('toolsTags');
+  project.tools.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tool-tag';
+    span.textContent = t;
+    tt.appendChild(span);
+  });
+
+  /* Gallery — gradient placeholders (replaced by real images when available) */
+  const gg = document.getElementById('galleryGrid');
+  const galleryShades = [
+    project.coverGrad,
+    project.coverGrad.replace('135deg', '160deg'),
+    project.coverGrad.replace('135deg', '110deg').replace('0.7', '0.5'),
+    project.coverGrad.replace('135deg', '180deg'),
+  ];
+  const galleryCount = Math.min(project.gallery.length || 4, 4);
+
+  for (let i = 0; i < galleryCount; i++) {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.setAttribute('data-hover', '');
+    item.dataset.index = i;
+
+    const bg = document.createElement('div');
+    bg.className = 'gallery-bg';
+    bg.style.background = galleryShades[i] || galleryShades[0];
+
+    if (project.gallery && project.gallery[i]) {
+      const img = new Image();
+      img.onload = () => {
+        bg.style.backgroundImage = `url(${project.gallery[i]})`;
+        bg.style.backgroundSize = 'cover';
+        bg.style.backgroundPosition = 'center';
+      };
+      img.src = project.gallery[i];
+    }
+
+    const num = document.createElement('div');
+    num.className = 'gallery-num';
+    num.textContent = String(i + 1).padStart(2, '0');
+
+    item.appendChild(bg);
+    item.appendChild(num);
+    item.addEventListener('click', () => openLb(i, galleryShades[i], project.gallery?.[i]));
+    gg.appendChild(item);
+  }
+
+  /* Next project */
+  document.getElementById('nextTitle').textContent = nextPrj.title;
+  document.getElementById('nextLink').href = `project-detail.html?id=${nextPrj.id}`;
+
+  /* Lightbox */
+  const lb      = document.getElementById('lb');
+  const lbImg   = document.getElementById('lbImg');
+  const lbClose = document.getElementById('lbClose');
+
+  function openLb(idx, grad, src) {
+    lbImg.style.background = grad || project.coverGrad;
+    if (src) {
+      lbImg.style.backgroundImage = `url(${src})`;
+      lbImg.style.backgroundSize = 'cover';
+      lbImg.style.backgroundPosition = 'center';
+    }
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    lbImg.style.backgroundImage = '';
+  }
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+  addHover(document.querySelectorAll('.gallery-item, .solution-item, .tool-tag'));
+</script>
+</body>
+</html>

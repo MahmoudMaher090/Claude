@@ -142,11 +142,13 @@
       card.style.setProperty('--grad', w.grad);
       card.setAttribute('data-hover', '');
       card.innerHTML = `
-        <div class="nf-thumb" style="background:${w.grad}"></div>
-        <div class="nf-overlay">
-          <div class="nf-cat">${w.catLabel}</div>
-          <div class="nf-name">${w.name}</div>
-          <div class="nf-view">View Project</div>
+        <div class="nf-card-inner">
+          <div class="nf-thumb" style="background:${w.grad}"></div>
+          <div class="nf-overlay">
+            <div class="nf-cat">${w.catLabel}</div>
+            <div class="nf-name">${w.name}</div>
+            <div class="nf-view">View Project</div>
+          </div>
         </div>
       `;
       card.addEventListener('click', e => { e.preventDefault(); openLightbox(w); });
